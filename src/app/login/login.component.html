@@ -1,0 +1,22 @@
+
+<div class="container">
+    <h1>Login</h1>
+    <form (ngSubmit)="onSubmit()" #invoiceForm="ngForm">
+
+      <div class="form-group">
+        <label for="user">User</label><br>
+        <input type="text" value="" class="form-control" [(ngModel)]="user.name" id="
+        name" required name="name"> 
+      </div>  
+
+      <div class="form-group">
+        <label for="pass">Password</label><br>
+        <input type="password" class="form-control" [(ngModel)]="user.pass" id="pass" required name="pass">
+      </div>
+ 
+      <input type="submit" class="button" [disabled]="!invoiceForm.form.valid" value="Submit">
+
+    </form>
+
+    <p>{{server_res}}</p>
+</div>

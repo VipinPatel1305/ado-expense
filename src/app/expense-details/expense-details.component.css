@@ -1,0 +1,71 @@
+#para1 {
+    color: DodgerBlue;
+    width: 50%;
+}
+
+#tab2 {
+    color: DodgerBlue;
+}
+
+tr{
+	text-align: left;
+}
+
+#summary{
+	font-size: 15px;
+	color: DodgerBlue;
+	font-family: monospace;
+	border:2px solid DodgerBlue;
+}
+
+#updatetable{
+	font-size: 15px;
+	color: DodgerBlue;
+	font-family: monospace;
+	border:2px solid DodgerBlue;
+}
+
+#monthyear{
+	width:10%;
+	font-size: 25px;
+	color: DodgerBlue;
+}
+
+#tableheader{
+	font-size: 15px;
+	color: DodgerBlue;
+	font-weight: bold;
+}
+
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #d2e8ff;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: DodgerBlue;
+    color: white;
+    }
+
+ .redcol{
+ 	color: red;
+ 	font-weight: bold;
+ }   
+
+ .greencol{
+ 	color: green;
+ 	font-weight: bold;
+ }  

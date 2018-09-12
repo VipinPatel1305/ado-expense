@@ -1,0 +1,42 @@
+<h2>Year</h2>
+<select [(ngModel)]="selectedyear">
+  <option *ngFor="let year of years">
+    {{year}}
+  </option>
+</select>
+
+<h3>Month</h3>
+<select [(ngModel)]="selectedmonth" (ngModelChange)="fillcheque(selectedmonth, selectedyear)">   
+  <option *ngFor="let month of months" >
+    {{month}}
+  </option>
+</select>
+
+
+<table style="width:50%">
+  <tr>
+    <th>S/No.</th>
+    <th>Date</th> 
+    <th>Details</th>
+    <th>Recipt No.</th>
+    <th>Amount</th>
+    <th>Settled</th>
+  </tr>
+  <tr *ngFor="let cheque of cheques">
+    <td>{{cheque.id}}.</td>
+    <td>{{cheque.date_issue| date}}</td>
+    <td>{{cheque.purpose}}</td>
+    <td>{{cheque.cheque_no}}</td>
+    <td>{{cheque.amount|currency:"₹"}}</td>
+    <td>{{cheque.settled}}</td>
+    <td *ngIf="cheque.settled!='Yes'"><button (click)="updaterecord(cheque)">Settle</button></td>
+</table>
+<table style="width:25%">
+  <tr>
+    <td>Total for the month</td>
+    <td>5553</td>
+  </tr>
+</table>
+
+
+

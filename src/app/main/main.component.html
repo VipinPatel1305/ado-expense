@@ -1,0 +1,7 @@
+<nav>
+    <button *ngIf="scope!='public'" routerLink="/new-invoice" routerLinkActive="active">New Invoice</button>
+    <button routerLink="/report-invoice" routerLinkActive="active">Invoice Report</button>
+    <button *ngIf="scope=='admin'" routerLink="/admin" routerLinkActive="active">Admin</button>
+    <button (click)="logoff()">Logout</button>
+ </nav>
+ 

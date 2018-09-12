@@ -1,0 +1,39 @@
+
+<div class="container">
+    <h1>New Cheque</h1>
+    <form (ngSubmit)="onSubmit()" #chequeForm="ngForm">
+      <div class="form-group">
+        <label for="purpose">Purpose</label>
+        <input type="text" class="form-control" [(ngModel)]="newcheque.purpose" id="purpose" required name="purpose">
+      </div>
+
+       <div class="form-group">
+        <label for="cheque_no">Cheque No.</label>
+        <input type="text" class="form-control" [(ngModel)]="newcheque.cheque_no" id="cheque_no" required name="cheque_no">
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input type="number" class="form-control" [(ngModel)]="newcheque.amount" id="amount" required name="amount"> 
+      </div>
+
+       <div class="form-group">
+        <label for="date_issue">Date</label>
+        <input type="date" class="form-control" [(ngModel)]="newcheque.date_issue" id="
+        date_issue" required name="date_issue"> 
+      </div>
+
+      <div class="form-group">
+        <label for="settled">Settled</label>
+        <select [(ngModel)]="newcheque.settled" class="form-control"id="
+        settled" required name="settled" >   
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>       
+ 
+      <button type="submit" class="btn btn-success" [disabled]="!chequeForm.form.valid" >Submit</button>
+
+    </form>
+</div>
+

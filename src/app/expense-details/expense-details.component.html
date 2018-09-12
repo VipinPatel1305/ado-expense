@@ -1,0 +1,108 @@
+<app-main></app-main>
+<div>
+ <select id="monthyear" [(ngModel)]="selectedmonth" (ngModelChange)="fillinvoice(selectedmonth, selectedyear)">   
+    <option *ngFor="let month of months" [ngValue]="month">
+      <span>{{month.name}}</span>
+    </option>
+  </select>
+
+<select id="monthyear" [(ngModel)]="selectedyear">
+  <option *ngFor="let year of years">
+   {{year}}
+  </option>
+</select>
+</div>
+<br> 
+<br> 
+<button *ngIf="scope!='public'" (click)="publish()">Publish</button>
+<a  *ngIf="disabledownload != true" href={{downloadlink}} download>Download</a>
+<table *ngIf="publishmode==true" id="customers" border=1 name="detailstable">
+  <tr id="tableheader">
+    <th>S/No.</th>
+    <th>Date</th> 
+    <th>Details</th>
+    <th>Recipt No.</th>
+    <th>Amount</th>
+  </tr>
+  <tr  *ngFor="let detail of details">
+      <td>{{detail.index}}.</td>
+
+      <td>
+        {{detail.trans_date|date:'d-MMM-yyyy'}}
+      </td>
+
+      <td>
+        {{detail.description}}
+      </td>
+
+      <td>
+        {{detail.recipt_num}}
+      </td>
+
+      <td>
+        {{detail.amount|currency:'INR'}}
+      </td>                 
+  </tr>
+</table>
+
+<table *ngIf="publishmode==false" id="customers" border=1 name="detailstable">
+  <tr id="tableheader">
+    <th>S/No.</th>
+    <th>Date</th> 
+    <th>Details</th>
+    <th>Recipt No.</th>
+    <th>Amount</th>
+    <th>For Month</th>
+    <th>For Year</th>
+  </tr>
+  <tr  *ngFor="let detail of details">
+      <td>{{detail.index}}.</td>
+
+      <td>
+        <input type=date [(ngModel)]="detail.trans_date">
+      </td>
+
+      <td>
+        <input type=text [(ngModel)]="detail.description">
+      </td>
+
+      <td>
+        <input type=text [(ngModel)]="detail.recipt_num">
+      </td>
+
+      <td>
+        <input type=number [(ngModel)]="detail.amount">
+      </td>   
+
+      <td>
+        <input type=number [(ngModel)]="detail.formonth">
+      </td>  
+
+      <td>
+        <input type=number [(ngModel)]="detail.foryear">
+      </td>                
+
+      <!--<td *ngIf="detail.amount != 0">{{detail.trans_date| date:'dd-MMM-yyyy'}}</td> -->
+      <td *ngIf="publishmode==false"><button (click)="updatedetail(detail)">Update</button></td>
+      <td><button (click)="deletedetail(detail)">Delete</button></td>
+  </tr>
+</table>
+
+<br>
+<table border=2 id="summary">
+  <tr>
+    <td id="tableheader">Total for this Month:</td>
+    <td>{{total|currency:"₹"}}</td>
+  </tr>
+  <tr>
+    <td id="tableheader">Month Balance:</td>
+    <td>{{montlydeposit}} - {{total}} = <span class="redcol"><span [class.greencol]="balance > 0">{{balance|currency:"₹"}}</span></span></td>
+  </tr>   
+  <tr>
+    <td id="tableheader">Cumulative Balance:</td>
+    <td>{{prevbal}} + {{balance}} = {{cumbal|currency:"₹"}}</td>
+  </tr>  
+</table>
+
+
+

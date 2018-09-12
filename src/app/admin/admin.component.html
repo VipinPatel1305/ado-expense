@@ -1,0 +1,38 @@
+<app-main></app-main>
+<div class="container">
+    <h1>Admin</h1>
+		 <table id="monthyear" name="yearmonthselection">
+		  <tr>
+		      <th>
+		        <h2>Month</h2>
+		      </th>
+
+		      <th>
+		        <h2>Year</h2>
+		      </th>
+		  </tr>
+		      <td>
+		        <select id="monthyear" [(ngModel)]="selectedmonth">   
+		          <option *ngFor="let month of months" [ngValue]="month.id">
+		            <span>{{month.name}}</span>
+		          </option>
+		        </select>
+		      </td>
+		      <td>
+		        <select id="monthyear" [(ngModel)]="selectedyear">
+		          <option *ngFor="let year of years">
+		           {{year}}
+		          </option>
+		        </select>
+		      </td>
+		    <tr>
+		  </tr>
+		</table>
+      <button type="submit" class="btn btn-success" (click)="closemonth(selectedmonth, selectedyear)" >Close Month</button>
+	  <button type="submit" class="btn btn-success" (click)="initmonth(selectedmonth, selectedyear)" >Intialize Month</button>
+	  <button type="submit" class="btn btn-success" (click)="generatereport(selectedmonth, selectedyear)" >Generate Report</button>
+</div>
+<div>
+	<p>Server Reply: {{returnmessage}}</p>
+</div>
+
