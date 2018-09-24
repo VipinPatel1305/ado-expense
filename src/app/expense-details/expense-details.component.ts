@@ -14,6 +14,10 @@ import {YEARS} from '../MonthData';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {AuthscopteService} from '../authscopte.service';
 import {DOMAIN} from '../MonthData';
+import {MatDialog} from '@angular/material';
+import {SampleDialogComponent} from '../sample-dialog/sample-dialog.component';
+import {ServerResponse} from '../ServerResponse';
+
 @Component({
   selector: 'app-expense-details',
   templateUrl: './expense-details.component.html',
@@ -42,12 +46,14 @@ export class ExpenseDetailsComponent implements OnInit {
   selectedmonth: Month = new Month(1, "January");
   disabledownload = true;
   downloadlink = "";
+  serverResponse: ServerResponse;
 
-  constructor(private http: HttpClient, private authservice: AuthscopteService) {
-
+  constructor(private http: HttpClient, private authservice: AuthscopteService, public dialog: MatDialog) {
+    this.serverResponse = new ServerResponse();
+     this.domainurl = authservice.getDomainUrl();
    }
-
-  domainurl = DOMAIN;
+  
+  domainurl = "";
 
   ngOnInit() {
     this.authservice.validatelogin('public');
@@ -88,6 +94,11 @@ export class ExpenseDetailsComponent implements OnInit {
       this.downloadlink = this.domainurl + "/download.php?month=" + selectedmonth.id 
        + "&year=" + selectedyear;
        console.log("download link:" + this.downloadlink);
+    }, err => {
+      this.serverResponse.err = true;
+      console.log("error:", err.error.msg);
+      this.serverResponse.msg = "Server Error: " + err.error.msg;
+      this.openDialog();
     }
     );
   }  
@@ -110,13 +121,24 @@ export class ExpenseDetailsComponent implements OnInit {
     console.log(detail);
     detail.id = Number(detail.id);
     // detail.amount = detail.updateamount;
-    this.updatedetailhttp(detail).subscribe();
+    this.updatedetailhttp(detail).subscribe(res =>{
+      this.serverResponse.err = false;
+      this.serverResponse.details = detail;
+      this.serverResponse.msg = res.msg;
+      this.openDialog();
+    },
+    err =>{
+      this.serverResponse.err = true;
+      console.log("error:", err.error.msg);
+      this.serverResponse.msg = "Server Error: " + err.error.msg;
+      this.openDialog();
+    });
   }
 
-  updatedetailhttp(detail: Details): Observable<string>{
+  updatedetailhttp(detail: Details): Observable<ServerResponse>{
   // now returns an Observable of Config
   var geturl = this.domainurl + "/update_invoice.php";
-  return  this.http.post<string>(geturl, detail, this.httpOptions);
+  return  this.http.post<ServerResponse>(geturl, detail, this.httpOptions);
   }
 
   deletedetail(detail: Details)
@@ -124,26 +146,38 @@ export class ExpenseDetailsComponent implements OnInit {
     console.log("Delete: id" + detail.id + " amount: " + detail.updateamount + detail.description + detail.recipt_num + detail.trans_date);
     console.log(detail);
     detail.id = Number(detail.id);
-    this.details = this.details.filter(h => h !== detail);
-    this.deletedetailhttp(detail).subscribe();
+    
+    this.deletedetailhttp(detail).subscribe(res =>{
+      this.serverResponse.err = false;
+      this.serverResponse.details = detail;
+      this.serverResponse.msg = res.msg;
+      this.details = this.details.filter(h => h !== detail);
+      this.openDialog();
+    },
+    err =>{
+      this.serverResponse.err = true;
+      console.log("error:", err.error.msg);
+      this.serverResponse.msg = "Server Error: " + err.error.msg;
+      this.openDialog();
+    });
   }
 
-  deletedetailhttp(detail: Details): Observable<string>{
+  deletedetailhttp(detail: Details): Observable<ServerResponse>{
   // now returns an Observable of Config
   var geturl = this.domainurl + "/delete_invoice.php"
-  return  this.http.post<string>(geturl, detail, this.httpOptions);
+  return  this.http.post<ServerResponse>(geturl, detail, this.httpOptions);
   }
 
- // generatereport(selectedmonth: Month, selectedyear)
- // {
- //   console.log("generate report called:" + selectedmonth.id);
- //   this.gethttpreport(selectedmonth.id, selectedyear).subscribe();
- // }
+  openDialog(): void {
+      const dialogRef = this.dialog.open(SampleDialogComponent, {
+        data: this.serverResponse,
+      });
 
- //  gethttpreport(monthval, selectedyear): Observable<string>{
- //    var geturl = this.domainurl + "/download.php?month=" + monthval + "&year=" + selectedyear;
- //    return  this.http.get<string>(geturl);
- //  }
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        
+      });
+    } 
 
 
   publish(){
@@ -154,6 +188,6 @@ export class ExpenseDetailsComponent implements OnInit {
       else{
         this.publishmode = true;
       }
-  }
+    }
 
 }

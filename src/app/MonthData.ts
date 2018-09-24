@@ -1,3 +1,4 @@
+
 import {Month} from './Month';
 
 export const MONTHS: Month[] = [
@@ -17,4 +18,4 @@ export const MONTHS: Month[] = [
 ;
 
 export const YEARS: number[] = [2018,2019];
-export const DOMAIN: string = "/records/backend";
+export const DOMAIN: string = "http://localhost:8888/records/backend";

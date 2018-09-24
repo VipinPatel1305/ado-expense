@@ -8,7 +8,7 @@ import {
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import {AuthscopteService} from '../authscopte.service'
-import {DOMAIN} from '../MonthData';
+
 
 @Component({
   selector: 'app-admin',
@@ -29,9 +29,11 @@ export class AdminComponent implements OnInit {
   })
 };
 
-domainurl = DOMAIN;
+domainurl = "";
 
-  constructor(private http: HttpClient, private authservice: AuthscopteService) { }
+  constructor(private http: HttpClient, private authservice: AuthscopteService) {
+    this.domainurl = authservice.getDomainUrl();
+   }
 
   ngOnInit() {
         this.authservice.validatelogin('admin');

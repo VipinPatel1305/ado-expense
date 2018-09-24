@@ -40,13 +40,38 @@ tr{
 #customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 60%;
 }
 
 #customers td, #customers th {
     border: 1px solid #ddd;
     padding: 8px;
 }
+
+
+#customers td:nth-child(1) {
+  width: 5px;
+
+  }
+
+/* the second */
+#customers td:nth-child(2) {
+  width: 120px;
+}
+
+/* the third */
+#customers td,  th:nth-child(3) {
+  width: 240px;
+ }
+
+/* the third */
+#customers td,  th:nth-child(4) {
+  width: 150px;
+ }
+
+ /* the third */
+#customers td,  th:nth-child(5) {
+  width: 50px;
+ }
 
 #customers tr:nth-child(even){background-color: #d2e8ff;}
 

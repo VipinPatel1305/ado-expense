@@ -1,4 +1,4 @@
-<app-main></app-main>
+<app-main *ngIf="publishmode==false"></app-main>
 <div>
  <select id="monthyear" [(ngModel)]="selectedmonth" (ngModelChange)="fillinvoice(selectedmonth, selectedyear)">   
     <option *ngFor="let month of months" [ngValue]="month">

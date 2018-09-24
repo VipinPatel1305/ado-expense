@@ -13,7 +13,9 @@ import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module'; 
 import { CookieService } from 'ngx-cookie-service';
-
+import { SampleDialogComponent } from './sample-dialog/sample-dialog.component';
+import {MatDialogModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -24,15 +26,19 @@ import { CookieService } from 'ngx-cookie-service';
     ChequeDetailsComponent,
     AdminComponent,
     MainComponent,
-    LoginComponent
+    LoginComponent,
+    SampleDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule, 
+    MatDialogModule
   ],
   providers: [CookieService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ SampleDialogComponent ]
 })
 export class AppModule { }

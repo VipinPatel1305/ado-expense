@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import {isDevMode } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -116,7 +117,9 @@ export class AuthscopteService {
 
   setCookie(cookievalue)
   {
-    //this.cookieService.set(this.cookieId, cookievalue);
+    if (isDevMode()) {
+      this.cookieService.set(this.cookieId, cookievalue);
+    }
     this.updatescope();
   }
 
@@ -133,7 +136,20 @@ export class AuthscopteService {
   logout()
   {
     this.scope = "###";
-    this.cookieService.delete(this.cookieId);
+    if (isDevMode()) {
+      this.cookieService.delete(this.cookieId);
+    }
     this.router.navigate(['/login']);
+  }
+
+    getDomainUrl()
+  {
+     if (isDevMode()) {
+       return "http://localhost:8888/records/backend";
+     }
+     else
+     {
+       return "/records/backend";
+     }
   }
 }

@@ -10,7 +10,6 @@ import {AuthscopteService} from '../authscopte.service'
 import {ServerResponse} from '../ServerResponse';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import {DOMAIN} from '../MonthData';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +20,7 @@ export class LoginComponent implements OnInit {
  server_res:string = "";
  user = new User();
  cookieValue = 'UNKNOWN';
- domainurl = DOMAIN;
+ domainurl = "";
   httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -29,6 +28,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private http: HttpClient,
     private authservice: AuthscopteService, private router: Router){
+      this.domainurl = authservice.getDomainUrl();
     }
 
   ngOnInit() {

@@ -14,10 +14,11 @@ import { Observable, throwError, of } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   scope: string = "";
-  domainurl = DOMAIN;
+  domainurl = "";
 
   constructor(private http: HttpClient, private authservice: AuthscopteService, private router: Router) {
     console.log("constrcutor main ");
+     this.domainurl = authservice.getDomainUrl();
    }
 
   ngOnInit() {
@@ -33,6 +34,8 @@ export class MainComponent implements OnInit {
     this.logouthttp().subscribe(res=> {
       console.log("scope:" + this.authservice.getScope());
       this.authservice.logout();
+    }, err =>{
+        console.log("failed to logout", err);
     });
   }
 
